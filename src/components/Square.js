@@ -29,6 +29,8 @@ class Square extends React.Component {
         }
 
         this.throw(x, y);
+
+        this.props.initialLaunch();
     }
 
     bounce = (toValue, x, y, firstBounce, goingRight, xFactor) => {
