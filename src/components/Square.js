@@ -13,6 +13,7 @@ class Square extends React.Component {
         this.gameInProgress = false;
         this.speedFactor = 1000;
         this.distanceFactor = 300;
+        this.isInitialLaunch = true;
         //this.backgroundCol = new Animated.Value('#0000ff');
         //Alert.alert('some title',' ' + this.marginBottomValue);
     }
@@ -27,9 +28,12 @@ class Square extends React.Component {
         else {
             this.setState({ backgroundCol: '#d3d3d3' })
         }
-
         this.throw(x, y);
 
+        this.props.moveStage(this.distanceFactor, this.speedFactor);
+    }
+
+    initialLaunch = () => {
         this.props.initialLaunch();
     }
 
@@ -81,20 +85,35 @@ class Square extends React.Component {
         //Alert.alert(vecticalFactor.toString() + "coordinate x: "+ coordinateX.toString())
         
         //animations for vertical movement
+        //this.props.moveStage(this.distanceFactor, this.speedFactor)
+
+        let distanceFactor =  this.distanceFactor;
+        let speedFactor = this.speedFactor;
+        
+        if(this.isInitialLaunch){
+           // this.props.moveStage(this.distanceFactor, this.speedFactor);
+            setInterval(() => { this.props.updateHeigthLabel( parseInt(  this.objectLocation.y._value)) }, 10);
+            this.isInitialLaunch = false;
+            distanceFactor = this.distanceFactor * 3;
+            speedFactor =  this.speedFactor * 3;
+
+        }
+
         this.currentFallAnimation = Animated.timing(
             this.objectLocation.y,
             {
-                toValue: this.objectLocation.y._value + (this.distanceFactor),//(this.distanceFactor*xFactor)
-                duration: this.speedFactor, //this.speedFactor * xFactor
+                toValue: this.objectLocation.y._value + (distanceFactor),//(this.distanceFactor*xFactor)
+                duration: speedFactor, //this.speedFactor * xFactor
                 easing: Easing.out(Easing.ease)
             }
         ).start((response) => {
             if (response.finished) {
+                //if()
                 this.currentFallAnimation = Animated.timing(
                     this.objectLocation.y,
                     {
                         toValue: 0,
-                        duration: this.speedFactor * (this.objectLocation.y._value / this.distanceFactor),
+                        duration: speedFactor * (this.objectLocation.y._value / distanceFactor),
                         easing: Easing.in(Easing.ease)
                     }
                 ).start((result) => {
