@@ -11,11 +11,11 @@ class Square extends React.Component {
         this.currentFallAnimation;
         this.currentBounceAnimation;
         this.gameInProgress = false;
-        this.speedFactor = 1000;
+        this.speedFactor = 2000;
         this.distanceFactor = 300;
         this.isInitialLaunch = true;
         //this.backgroundCol = new Animated.Value('#0000ff');
-        //Alert.alert('some title',' ' + this.marginBottomValue);
+        //Alert.alert('some title',' ' + this.marginBottomValue); 
     }
 
     handlePress = (evt) => {
@@ -150,7 +150,7 @@ class Square extends React.Component {
         const backgroundCol = this.state.backgroundCol;
 
         return (
-            <Animated.View style={{ width: 78, height: 86, marginLeft: leftDist, marginBottom: bottomDist }}>
+            <Animated.View style={{ width: 78, height: 86, zIndex:1, marginLeft: leftDist, marginBottom: bottomDist }}>
                     <View style={{ width: 78, height: 86 }}>
                         <ImageBackground style={{width: 78, height: 86 }} source={require("../../images/fox_going_down.png")}>
                             <TouchableOpacity onPress={this.handlePress} style={{ width: 50, height: 86, alignSelf: 'center' }}>
