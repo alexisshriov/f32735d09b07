@@ -43,7 +43,7 @@ class Stage extends React.Component {
                         <Square stageWidth={this.windowWidth} stageHeigth={this.windowHeigth} initialLaunch={this.initialLaunch} updateHeigthLabel = {this.updateHeigthLabel} moveStage = {this.moveStage} />
                     </ImageBackground>
                 </Animated.View>
-                <View style={{marginTop: this.state.stageHeigth._value , position:'absolute', height:20, width:20, backgroundColor: 'red'}}></View>
+                <View style={{marginTop: -100 + this.state.stageHeigth._value , position:'absolute', height:50, width:50, backgroundColor: 'red'}}></View>
             </View>
             
         )
