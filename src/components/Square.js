@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Animated, Easing, Alert, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Animated, Easing, Alert, Image, ImageBackground } from 'react-native';
 
 class Square extends React.Component {
     constructor(props) {
@@ -74,8 +74,12 @@ class Square extends React.Component {
         //interpoling vertical factor to get a value from 0 to 1;
         const xFactor = (25 - Math.abs(coordinateX -25)) / 25;
 
+       // Alert.alert((this.currentFallAnimation == null).toString())
+
         if (this.currentFallAnimation) {
             this.currentFallAnimation.stop();
+            this.currentBounceAnimation.stop();
+            this.bounce(this.props.stageWidth - 50, coordinateX, coordinateY, true, true, xFactor);
         }
 
         if (!this.gameInProgress) {
@@ -94,8 +98,8 @@ class Square extends React.Component {
            // this.props.moveStage(this.distanceFactor, this.speedFactor);
             setInterval(() => { this.props.updateHeigthLabel( parseInt(  this.objectLocation.y._value)) }, 10);
             this.isInitialLaunch = false;
-            distanceFactor = this.distanceFactor * 3;
-            speedFactor =  this.speedFactor * 3;
+            distanceFactor = this.distanceFactor*3;
+            speedFactor =  this.speedFactor*3;
 
         }
 
@@ -106,9 +110,9 @@ class Square extends React.Component {
                 duration: speedFactor, //this.speedFactor * xFactor
                 easing: Easing.out(Easing.ease)
             }
-        ).start((response) => {
+        );
+        this.currentFallAnimation.start((response) => {
             if (response.finished) {
-                //if()
                 this.currentFallAnimation = Animated.timing(
                     this.objectLocation.y,
                     {
@@ -116,9 +120,11 @@ class Square extends React.Component {
                         duration: speedFactor * (this.objectLocation.y._value / distanceFactor),
                         easing: Easing.in(Easing.ease)
                     }
-                ).start((result) => {
+                );
+                this.currentFallAnimation.start((result) => {
                     if (result.finished) {
                         //Alert.alert("Ive touched the floor ")
+                        //Alert.alert((this.currentFallAnimation == null).toString())
                         this.currentFallAnimation = null;
                         this.gameInProgress = false;
                         this.currentBounceAnimation.stop();
@@ -145,11 +151,13 @@ class Square extends React.Component {
 
         return (
             <Animated.View style={{ width: 78, height: 86, marginLeft: leftDist, marginBottom: bottomDist }}>
-                <TouchableOpacity onPress={this.handlePress}>
                     <View style={{ width: 78, height: 86 }}>
-                        <Image style={{width: 78, height: 86 }} source={require("../../images/fox_going_down.png")}/>
+                        <ImageBackground style={{width: 78, height: 86 }} source={require("../../images/fox_going_down.png")}>
+                            <TouchableOpacity onPress={this.handlePress} style={{ width: 50, height: 86, alignSelf: 'center' }}>
+                            </TouchableOpacity>
+                        </ImageBackground>
                     </View>  
-                </TouchableOpacity>
+               
             </Animated.View>
 
         )
