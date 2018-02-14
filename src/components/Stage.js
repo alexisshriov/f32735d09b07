@@ -40,7 +40,7 @@ class Stage extends React.Component {
             <Animated.View style={{ height: this.windowHeigth, backgroundColor: backgroundColor }}>
                 <Text style={{ fontSize: 50, zIndex:2, color: "red", alignSelf: 'center', marginTop: 10 }}>{(this.state.displayedHeight)}</Text>
                 <Animated.View style={{ width: this.windowWidth, height: this.windowHeigth, marginTop: this.state.stageHeigth }}>
-                    <ImageBackground source={require("../../images/stage.png")} style={{  flex: 1, position: 'absolute', width: this.windowWidth, height: this.windowHeigth-200, justifyContent: 'flex-end', alignItems: 'center' }}>
+                    <ImageBackground source={require("../../images/stage.png")} style={{  flex: 1, position: 'absolute', width: this.windowWidth, height: this.windowHeigth-127, justifyContent: 'flex-end', alignItems: 'center' }}>
                         <Square stageWidth={this.windowWidth} stageHeigth={this.windowHeigth} initialLaunch={this.initialLaunch} updateHeigthLabel = {this.updateHeigthLabel} moveStage = {this.moveStage} />
                     </ImageBackground>
                 </Animated.View>

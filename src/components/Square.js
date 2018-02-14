@@ -11,7 +11,7 @@ class Square extends React.Component {
         this.currentFallAnimation;
         this.currentBounceAnimation;
         this.gameInProgress = false;
-        this.speedFactor = 2000;
+        this.speedFactor = 1000;
         this.distanceFactor = 300;
         this.isInitialLaunch = true;
         //this.backgroundCol = new Animated.Value('#0000ff');
