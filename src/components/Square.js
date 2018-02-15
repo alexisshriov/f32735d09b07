@@ -4,18 +4,14 @@ import { View, Text, TouchableOpacity, Animated, Easing, Alert, Image, ImageBack
 class Square extends React.Component {
     constructor(props) {
         super(props)
-        // this.marginBottomValue = new Animated.Value(0);
-        // this.marginRightValue = new Animated.Value(0);
         this.objectLocation = new Animated.ValueXY({ x: 0, y: 0 });
         this.state = { backgroundCol: '#0000ff' };
         this.currentFallAnimation;
         this.currentBounceAnimation;
         this.gameInProgress = false;
-        this.speedFactor = 1000;
+        this.speedFactor = 2000;
         this.distanceFactor = 300;
         this.isInitialLaunch = true;
-        //this.backgroundCol = new Animated.Value('#0000ff');
-        //Alert.alert('some title',' ' + this.marginBottomValue); 
     }
 
     handlePress = (evt) => {
@@ -98,8 +94,8 @@ class Square extends React.Component {
            // this.props.moveStage(this.distanceFactor, this.speedFactor);
             setInterval(() => { this.props.updateHeigthLabel( parseInt(  this.objectLocation.y._value)) }, 10);
             this.isInitialLaunch = false;
-            distanceFactor = this.distanceFactor*3;
-            speedFactor =  this.speedFactor*3;
+            distanceFactor = this.distanceFactor*2;
+            speedFactor =  this.speedFactor*2;
 
         }
 
@@ -111,13 +107,14 @@ class Square extends React.Component {
                 easing: Easing.out(Easing.ease)
             }
         );
+       // Alert.alert(this.objectLocation.y._value.tostring())
         this.currentFallAnimation.start((response) => {
             if (response.finished) {
                 this.currentFallAnimation = Animated.timing(
                     this.objectLocation.y,
                     {
-                        toValue: 0,
-                        duration: speedFactor * (this.objectLocation.y._value / distanceFactor),
+                        toValue:  this.objectLocation.y._value - this.props.stageHeigth,
+                        duration: speedFactor * this.props.stageHeigth / this.distanceFactor,
                         easing: Easing.in(Easing.ease)
                     }
                 );
@@ -128,6 +125,7 @@ class Square extends React.Component {
                         this.currentFallAnimation = null;
                         this.gameInProgress = false;
                         this.currentBounceAnimation.stop();
+                        //Alert.alert("Game Over!")
                     }
                 });
             }

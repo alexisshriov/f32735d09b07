@@ -29,6 +29,11 @@ class Stage extends React.Component {
         }
     }
 
+    reload = () =>{
+        // alert("reloaded?")
+        // this.forceUpdate();
+    }
+
     render() {
         let backgroundColor = this.state.stageHeigth.interpolate({
             inputRange: [0, 20000, 40000, 60000],
@@ -41,12 +46,12 @@ class Stage extends React.Component {
                 <Text style={{ fontSize: 50, zIndex:2, color: "red", alignSelf: 'center', marginTop: 10 }}>{(this.state.displayedHeight)}</Text>
                 <Animated.View style={{ width: this.windowWidth, height: this.windowHeigth, marginTop: this.state.stageHeigth }}>
                     <ImageBackground source={require("../../images/stage.png")} style={{  flex: 1, position: 'absolute', width: this.windowWidth, height: this.windowHeigth-127, justifyContent: 'flex-end', alignItems: 'center' }}>
-                        <Square stageWidth={this.windowWidth} stageHeigth={this.windowHeigth} initialLaunch={this.initialLaunch} updateHeigthLabel = {this.updateHeigthLabel} moveStage = {this.moveStage} />
+                        <Square stageWidth={this.windowWidth} stageHeigth={this.windowHeigth} initialLaunch={this.initialLaunch} updateHeigthLabel = {this.updateHeigthLabel} moveStage = {this.moveStage} reload =  {this.reload} />
                     </ImageBackground>
                 </Animated.View>
                 <Animated.View style={{top: -1000 + this.state.displayedHeight/32, position:'absolute', alignSelf:'center', height:50, width:50, backgroundColor: 'red'}}></Animated.View>
-                <Image source={require("../../images/sun3.png")} style={{top: -50 + this.state.displayedHeight/16, position:'absolute', marginLeft: 50, height:400, width:400}}/>
-                <Animated.View style={{top: -550 + this.state.displayedHeight/32, position:'absolute', height:50, width:50, backgroundColor: 'white'}}></Animated.View>
+                <Image source={require("../../images/sun.png")} style={{top: -50 + this.state.displayedHeight/32, position:'absolute', marginLeft: 50, height:400, width:400}}/>
+                <Image source={require("../../images/moon.png")} style={{top: -550 + this.state.displayedHeight/32, position:'absolute', marginLeft: 50, height:150, width:150}}/>
             </Animated.View>
 
         )
