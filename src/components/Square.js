@@ -10,8 +10,9 @@ class Square extends React.Component {
         this.currentBounceAnimation;
         this.gameInProgress = false;
         this.speedFactor = 2000;
-        this.distanceFactor = 300;
+        this.distanceFactor = 100000;
         this.isInitialLaunch = true;
+        this.timeStamp;
     }
 
     handlePress = (evt) => {
@@ -89,15 +90,33 @@ class Square extends React.Component {
 
         let distanceFactor =  this.distanceFactor;
         let speedFactor = this.speedFactor;
+
+        let newTime = new Date();
+        let timeDiff = newTime - this.timeStamp;
+      //  Alert.alert(timeDiff.toString())
+        this.timeStamp = newTime;
+
+        if(timeDiff > this.speedFactor){
+            timeDiff = this.speedFactor
+        }
         
         if(this.isInitialLaunch){
            // this.props.moveStage(this.distanceFactor, this.speedFactor);
-            setInterval(() => { this.props.updateHeigthLabel( parseInt(  this.objectLocation.y._value)) }, 10);
+            // setInterval(() => { this.props.updateHeigthLabel( parseInt(  this.objectLocation.y._value)) }, 1000);
+            this.startDate = new Date();
             this.isInitialLaunch = false;
             distanceFactor = this.distanceFactor*2;
             speedFactor =  this.speedFactor*2;
+          //  Alert.alert(parseInt(  (timeDiff/this.speedFactor) ).toString())
+            this.props.updateHeigthLabel( parseInt( distanceFactor )) 
 
+        }else{
+            //Alert.alert(parseInt( this.distanceFactor * (timeDiff/this.speedFactor) ).toString())
+            this.props.updateHeigthLabel( parseInt( this.distanceFactor * (timeDiff/this.speedFactor) )) 
         }
+
+        
+        //this.props.updateHeigthLabel( parseInt( this.objectLocation.y._value)) 
 
         this.currentFallAnimation = Animated.timing(
             this.objectLocation.y,
