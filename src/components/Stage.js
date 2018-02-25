@@ -12,11 +12,11 @@ class Stage extends React.Component {
             stageHeigth: new Animated.Value(0), 
             sunHeigth: new Animated.Value(-50), 
             moonHeigth: new Animated.Value(-550), 
-            displayedHeight: 0 
+            displayedHeight: 0
+
         }
         this.windowWidth = Dimensions.get('window').width;
         this.windowHeigth = Dimensions.get('window').height;
-        this.temp = 0;
     }
 
     moveStage = (distanceFactor, speedFactor) => {

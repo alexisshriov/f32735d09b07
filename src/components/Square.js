@@ -5,12 +5,12 @@ class Square extends React.Component {
     constructor(props) {
         super(props)
         this.objectLocation = new Animated.ValueXY({ x: 0, y: 0 });
-        this.state = { backgroundCol: '#0000ff' };
+        this.state = { backgroundCol: '#0000ff', isFoxGoingUp: false};
         this.currentFallAnimation;
         this.currentBounceAnimation;
         this.gameInProgress = false;
         this.speedFactor = 2000;
-        this.distanceFactor = 100000;
+        this.distanceFactor = 300;
         this.isInitialLaunch = true;
         this.timeStamp;
     }
@@ -117,6 +117,7 @@ class Square extends React.Component {
 
         
         //this.props.updateHeigthLabel( parseInt( this.objectLocation.y._value)) 
+        this.setState({isFoxGoingUp: true});
 
         this.currentFallAnimation = Animated.timing(
             this.objectLocation.y,
@@ -129,6 +130,7 @@ class Square extends React.Component {
        // Alert.alert(this.objectLocation.y._value.tostring())
         this.currentFallAnimation.start((response) => {
             if (response.finished) {
+                this.setState({isFoxGoingUp: false});
                 this.currentFallAnimation = Animated.timing(
                     this.objectLocation.y,
                     {
@@ -168,12 +170,18 @@ class Square extends React.Component {
 
         return (
             <Animated.View style={{ width: 78, height: 86, zIndex:1, marginLeft: leftDist, marginBottom: bottomDist }}>
-                    <View style={{ width: 78, height: 86 }}>
-                        <ImageBackground style={{width: 78, height: 86 }} source={require("../../images/fox_going_down.png")}>
-                            <TouchableOpacity onPress={this.handlePress} style={{ width: 50, height: 86, alignSelf: 'center' }}>
-                            </TouchableOpacity>
-                        </ImageBackground>
-                    </View>  
+                <View style={{ width: 78, height: 86 }}>
+
+                    <TouchableOpacity onPress={this.handlePress} style={{ width: 78, height: 86, alignSelf: 'center' }}>
+                        {this.state.isFoxGoingUp?
+                            <Image style={{ width: 78, height: 86 }} source={require("../../images/fox_going_up.png")}/>:
+                            <Image style={{ width: 78, height: 86 }} source={require("../../images/fox_going_down.png")}/>
+                        }
+                      
+
+                    </TouchableOpacity>
+
+                </View>  
                
             </Animated.View>
 
