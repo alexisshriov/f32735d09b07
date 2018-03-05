@@ -12,12 +12,21 @@ class Square extends React.Component {
         this.speedFactor = 2000;
         this.distanceFactor = 300;
         this.isInitialLaunch = true;
-        this.timeStamp;
+        this.timeStamp = 0;
+        this.timeDiff = 0;
     }
 
     handlePress = (evt) => {
         let x = evt.nativeEvent.locationX;
         let y = evt.nativeEvent.locationY;
+
+        let newTime = new Date();
+        this.timeDiff = newTime - this.timeStamp;
+        this.timeStamp = newTime;
+
+        if(this.timeDiff > this.speedFactor){
+            this.timeDiff = this.speedFactor
+        }
 
         if (x > 25) {
             this.setState({ backgroundCol: '#000000' })
@@ -26,8 +35,9 @@ class Square extends React.Component {
             this.setState({ backgroundCol: '#d3d3d3' })
         }
         this.throw(x, y);
+      
+        this.props.moveStage(this.distanceFactor, this.speedFactor);//
 
-        this.props.moveStage(this.distanceFactor, this.speedFactor);
     }
 
     initialLaunch = () => {
@@ -91,14 +101,7 @@ class Square extends React.Component {
         let distanceFactor =  this.distanceFactor;
         let speedFactor = this.speedFactor;
 
-        let newTime = new Date();
-        let timeDiff = newTime - this.timeStamp;
-      //  Alert.alert(timeDiff.toString())
-        this.timeStamp = newTime;
-
-        if(timeDiff > this.speedFactor){
-            timeDiff = this.speedFactor
-        }
+       
         
         if(this.isInitialLaunch){
            // this.props.moveStage(this.distanceFactor, this.speedFactor);
@@ -110,9 +113,9 @@ class Square extends React.Component {
           //  Alert.alert(parseInt(  (timeDiff/this.speedFactor) ).toString())
             this.props.updateHeigthLabel( parseInt( distanceFactor )) 
 
-        }else{
+        } else{
             //Alert.alert(parseInt( this.distanceFactor * (timeDiff/this.speedFactor) ).toString())
-            this.props.updateHeigthLabel( parseInt( this.distanceFactor * (timeDiff/this.speedFactor) )) 
+            this.props.updateHeigthLabel( parseInt( this.objectLocation.y._value + this.distanceFactor * (this.timeDiff/this.speedFactor) )) 
         }
 
         
@@ -134,7 +137,7 @@ class Square extends React.Component {
                 this.currentFallAnimation = Animated.timing(
                     this.objectLocation.y,
                     {
-                        toValue:  this.objectLocation.y._value - this.props.stageHeigth,
+                        toValue:  this.objectLocation.y._value - this.props.stageHeigth - 300,
                         duration: speedFactor * this.props.stageHeigth / this.distanceFactor,
                         easing: Easing.in(Easing.ease)
                     }
@@ -177,8 +180,6 @@ class Square extends React.Component {
                             <Image style={{ width: 78, height: 86 }} source={require("../../images/fox_going_up.png")}/>:
                             <Image style={{ width: 78, height: 86 }} source={require("../../images/fox_going_down.png")}/>
                         }
-                      
-
                     </TouchableOpacity>
 
                 </View>  

@@ -44,11 +44,11 @@ class Stage extends React.Component {
 
     updateHeigthLabel = (newHeigth) => {
         //Alert.alert(newHeigth.toString())
-     let totalHeigth = this.state.displayedHeight + newHeigth;
+     //let totalHeigth = this.state.displayedHeight + newHeigth;
      //Alert.alert((this.state.displayedHeight +" _ "+newHeigth+ "_" +totalHeigth).toString())
-     //if (newHeigth > this.state.displayedHeight) {
-           this.setState({ displayedHeight: totalHeigth });
-      // }
+     if (newHeigth > this.state.displayedHeight) {
+           this.setState({ displayedHeight: newHeigth });
+      }
     }
 
     reload = () => {
@@ -70,7 +70,9 @@ class Stage extends React.Component {
                     style={{ fontSize: 50, zIndex: 2, color: "white", alignSelf: 'center', marginTop: 10 }} 
                     value={this.state.displayedHeight} 
                     timing={(interval, progress) => {
-                      return 15
+
+                     return 10
+
                     }}             
                 />    
                 <Animated.View style={{ width: this.windowWidth, height: this.windowHeigth, marginTop: this.state.stageHeigth }}>
