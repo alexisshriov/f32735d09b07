@@ -84,6 +84,7 @@ class Stage extends React.Component {
                     <Image source={require("../../images/moon.png")} style={{ top: -550 + this.state.displayedHeight / 32, position: 'absolute', marginLeft: 50, height: 150, width: 150 }} />  */}
                     <Animated.Image source={require("../../images/sun.png")} style={{ top: this.state.sunHeigth, position: 'absolute', marginLeft: 50, height: 400, width: 400 }} />
                     <Animated.Image source={require("../../images/moon.png")} style={{ top: this.state.moonHeigth, position: 'absolute', marginLeft: 50, height: 200, width: 200 }} /> 
+                    {/* <Animated.Image source={require("../../images/cloud2.png")} style={{ top: this.state.sunHeigth, position: 'absolute', marginLeft: 50, height: 1500, width: 1500 }} /> */}
                 </Animated.View>
         )
     }
