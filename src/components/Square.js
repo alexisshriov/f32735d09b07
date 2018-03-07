@@ -144,7 +144,7 @@ class Square extends React.Component {
                 );
                 this.currentFallAnimation.start((result) => {
                     if (result.finished) {
-                        //Alert.alert("Ive touched the floor ")
+                        Alert.alert("Game Over")
                         //Alert.alert((this.currentFallAnimation == null).toString())
                         this.currentFallAnimation = null;
                         this.gameInProgress = false;

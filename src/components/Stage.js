@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Alert, Image, ImageBackground, Animated } from 'react-native';
+import { View, Text,TouchableHighlight, TouchableOpacity, Alert, Image, ImageBackground, Animated, Modal } from 'react-native';
 import AnimateNumber from 'react-native-animate-number'
 import Square from './Square'
 import Dimensions from 'Dimensions';
@@ -63,6 +63,33 @@ class Stage extends React.Component {
         });
 
         return (
+            <View>
+                 <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 22}}>
+            <View>
+              <Text>Hello World!</Text>
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
+           
+
+
+
+
             <Animated.View style={{ height: this.windowHeigth, backgroundColor: backgroundColor }}>
                 {/* <Text style={{ fontSize: 50, zIndex:2, color: "red", alignSelf: 'center', marginTop: 10 }}>{(this.state.displayedHeight)}</Text> */}
                 <AnimateNumber 
@@ -70,9 +97,7 @@ class Stage extends React.Component {
                     style={{ fontSize: 50, zIndex: 2, color: "white", alignSelf: 'center', marginTop: 10 }} 
                     value={this.state.displayedHeight} 
                     timing={(interval, progress) => {
-
-                     return 10
-
+                        return 10
                     }}             
                 />    
                 <Animated.View style={{ width: this.windowWidth, height: this.windowHeigth, marginTop: this.state.stageHeigth }}>
@@ -80,14 +105,15 @@ class Stage extends React.Component {
                         <Square stageWidth={this.windowWidth} stageHeigth={this.windowHeigth} initialLaunch={this.initialLaunch} updateHeigthLabel={this.updateHeigthLabel} moveStage={this.moveStage} reload={this.reload} />
                     </ImageBackground>
                 </Animated.View>
-  
                     {/* <Animated.View style={{ top: -1000 + this.state.displayedHeight / 32, position: 'absolute', alignSelf: 'center', height: 50, width: 50, backgroundColor: 'red' }}></Animated.View>
                     <Image source={require("../../images/sun.png")} style={{ top: -50 + this.state.displayedHeight / 32, position: 'absolute', marginLeft: 50, height: 400, width: 400 }} />
                     <Image source={require("../../images/moon.png")} style={{ top: -550 + this.state.displayedHeight / 32, position: 'absolute', marginLeft: 50, height: 150, width: 150 }} />  */}
                     <Animated.Image source={require("../../images/sun.png")} style={{ top: this.state.sunHeigth, position: 'absolute', marginLeft: 50, height: 400, width: 400 }} />
+                    <Animated.Image source={require("../../images/galaxi.png")} style={{ top: -100, position: 'absolute', marginLeft: 50, height: 400, width: 400 }} />
                     <Animated.Image source={require("../../images/moon.png")} style={{ top: this.state.moonHeigth, position: 'absolute', marginLeft: 50, height: 200, width: 200 }} /> 
                     {/* <Animated.Image source={require("../../images/cloud2.png")} style={{ top: this.state.sunHeigth, position: 'absolute', marginLeft: 50, height: 1500, width: 1500 }} /> */}
                 </Animated.View>
+                </View>
         )
     }
 }
