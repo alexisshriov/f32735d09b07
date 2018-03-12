@@ -74,6 +74,11 @@ class Square extends React.Component {
         );
     }
 
+    restartGame = () =>{
+        this.objectLocation = new Animated.ValueXY({ x: 0, y: 0 });
+        this.props.reload();
+    }
+
     //throws the object up and then it falls down
     throw = (coordinateX, coordinateY) => {
         //correcting out of bound coordinate issue, seems that when clicking too fast the coordinate can be > 25
@@ -144,7 +149,15 @@ class Square extends React.Component {
                 );
                 this.currentFallAnimation.start((result) => {
                     if (result.finished) {
-                        Alert.alert("Game Over")
+                        Alert.alert(
+                            'Game Over',
+                            "Score:" + this.props.score.toString(),
+                            [
+                              {text: 'Play Again', onPress: this.restartGame},
+                              {text: 'Exit', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                            ],
+                            { cancelable: false }
+                          )
                         //Alert.alert((this.currentFallAnimation == null).toString())
                         this.currentFallAnimation = null;
                         this.gameInProgress = false;
@@ -155,6 +168,8 @@ class Square extends React.Component {
             }
         })
     }
+
+ 
 
     render() {
         const widthRange = this.props.stageWidth;
