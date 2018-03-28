@@ -149,6 +149,23 @@ class Square extends React.Component {
                 );
                 this.currentFallAnimation.start((result) => {
                     if (result.finished) {
+                        try {
+                            const value = await AsyncStorage.getItem('@TestStore:key');
+                            if (value !== null){
+                              // We have data!!
+                              console.log(value);
+                            }
+                          } catch (error) {
+                            // Error retrieving data
+                          }
+
+                        try {
+                            await AsyncStorage.setItem('@TestStore:key', 'I like to save it.');
+                          } catch (error) {
+                            Alert.alert("There has been an error!.");
+                          }
+
+
                         Alert.alert(
                             'Game Over',
                             "Score:" + this.props.score.toString(),
@@ -158,6 +175,7 @@ class Square extends React.Component {
                             ],
                             { cancelable: false }
                           )
+
                         //Alert.alert((this.currentFallAnimation == null).toString())
                         this.currentFallAnimation = null;
                         this.gameInProgress = false;
